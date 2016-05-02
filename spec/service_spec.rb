@@ -81,4 +81,22 @@ describe 'service' do
       expect(attributes['bio']).to eq('southern belle')
     end
   end
+
+  describe 'PUT on /api/v1/users/:id' do
+    it 'updates a user' do
+      User.create(
+            name: 'ana',
+            email: 'ana@email.com',
+            password: 'whatever',
+            bio: 'rspec master'
+      )
+      put '/api/v1/users/ana', {
+        bio: 'testing freak'
+      }.to_json
+      expect(last_response).to be_ok
+      get '/api/v1/users/ana'
+      attributes = JSON.parse(last_response.body)
+      expect(attributes['bio']).to eq('testing freak')
+    end
+  end
 end
