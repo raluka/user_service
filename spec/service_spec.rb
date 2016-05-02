@@ -113,5 +113,25 @@ describe 'service' do
       get '/api/v1/users/francis'
       expect(last_response.status).to be 404
     end
+    # TODO: write test 'raise error if user doesn't exist'
+  end
+
+  describe 'POST on /api/v1/users/:id/sessions' do
+    before(:each) do
+      User.create(name: 'josh', email: 'josh@email.com', password: 'right', bio: 'bio')
+    end
+    it 'returns the user object on valid credentials' do
+      post '/api/v1/users/josh/sessions', {
+        password: 'right' }.to_json
+      expect(last_response).to be_ok
+      attributes = JSON.parse(last_response.body)
+      expect(attributes['name']).to eq('josh')
+    end
+
+    it 'fails on invalid credentials' do
+      post '/api/v1/users/josh/sessions', {
+        password: 'wrong' }.to_json
+      expect(last_response.status).to be 400
+    end
   end
 end
