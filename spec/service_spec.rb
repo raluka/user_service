@@ -85,10 +85,10 @@ describe 'service' do
   describe 'PUT on /api/v1/users/:id' do
     it 'updates a user' do
       User.create(
-            name: 'ana',
-            email: 'ana@email.com',
-            password: 'whatever',
-            bio: 'rspec master'
+        name: 'ana',
+        email: 'ana@email.com',
+        password: 'whatever',
+        bio: 'rspec master'
       )
       put '/api/v1/users/ana', {
         bio: 'testing freak'
@@ -97,6 +97,21 @@ describe 'service' do
       get '/api/v1/users/ana'
       attributes = JSON.parse(last_response.body)
       expect(attributes['bio']).to eq('testing freak')
+    end
+  end
+
+  describe 'DELETE on /api/v1/users/:id' do
+    it 'deletes a user' do
+      User.create(
+        name: 'francis',
+        email: 'no spam',
+        password: 'whatever',
+        bio: 'williamsburg hipster'
+      )
+      delete '/api/v1/users/francis'
+      expect(last_response).to be_ok
+      get '/api/v1/users/francis'
+      expect(last_response.status).to be 404
     end
   end
 end
