@@ -63,4 +63,22 @@ describe 'service' do
       expect(last_response.status).to be 404
     end
   end
+
+  describe 'POST on /api/v1/users' do
+    # TODO: test create user with invalid parameters
+    it 'creates a user' do
+      post '/api/v1/users', {
+        name: 'trotter',
+        email: 'no spam',
+        password: 'whatever',
+        bio: 'southern belle'
+      }.to_json
+      expect(last_response).to be_ok
+      get '/api/v1/users/trotter'
+      attributes = JSON.parse(last_response.body)
+      expect(attributes['name']).to eq('trotter')
+      expect(attributes['email']).to eq('no spam')
+      expect(attributes['bio']).to eq('southern belle')
+    end
+  end
 end
