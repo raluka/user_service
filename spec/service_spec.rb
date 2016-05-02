@@ -31,10 +31,36 @@ describe 'service' do
     end
 
     it 'returns a user by name' do
-      get '/api/v1/users/paul'
+      get '/api/v1/users/john'
       expect(last_response).to be_ok
-      attributes = JSON.parse(last_response.body)['user']
+      attributes = JSON.parse(last_response.body)
       expect(attributes['name']).to eq('john')
+    end
+
+    it 'returns a user with an email' do
+      get '/api/v1/users/john'
+      expect(last_response).to be_ok
+      attributes = JSON.parse(last_response.body)
+      expect(attributes['email']).to eq('john@dose.com')
+    end
+
+    it "doesn't return user's password" do
+      get '/api/v1/users/john'
+      expect(last_response).to be_ok
+      attributes = JSON.parse(last_response.body)
+      expect(attributes).to_not have_key('password')
+    end
+
+    it 'returns a user with a bio' do
+      get '/api/v1/users/john'
+      expect(last_response).to be_ok
+      attributes = JSON.parse(last_response.body)
+      expect(attributes['bio']).to eq('rubyist')
+    end
+
+    it "returns 404 for a user that doesn't exist" do
+      get '/api/v1/users/foo'
+      expect(last_response.status).to be 404
     end
   end
 end
