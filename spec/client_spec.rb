@@ -12,8 +12,8 @@ describe 'client' do
     User.destroy_all
 
     # create fresh new users
-    User.create(name: 'john', email: 'john@dose.com', bio: 'rubyist')
-    User.create(name: 'jane', email: 'jane@dose.com', bio: 'forever young')
+    User.create(name: 'john', email: 'john@dose.com',password: 'strongpass', bio: 'rubyist')
+    User.create(name: 'jane', email: 'jane@dose.com',password: 'whatever', bio: 'forever young')
   end
 
   it 'gets a user' do
@@ -47,5 +47,14 @@ describe 'client' do
   it 'destroys a user' do
     expect(ClientUser.destroy('jane')).to be true
     expect(ClientUser.find_by_name('jane')).to be_nil
+  end
+
+  it 'verifies login credentials' do
+    user = ClientUser.login('john', 'strongpass')
+    expect(user['name']).to eq('john')
+  end
+
+  it 'returns nil for invalid credentials' do
+    expect(ClientUser.login('john', 'wrongpass')).to be_nil
   end
 end
