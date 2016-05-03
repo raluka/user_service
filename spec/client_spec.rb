@@ -12,16 +12,8 @@ describe 'client' do
     User.destroy_all
 
     # create fresh new users
-    User.create(
-      name: 'john',
-      email: 'john@dose.com',
-      bio: 'rubyist'
-    )
-    User.create(
-      name: 'jane',
-      email: 'jane@dose.com',
-      bio: 'forever young'
-    )
+    User.create(name: 'john', email: 'john@dose.com', bio: 'rubyist')
+    User.create(name: 'jane', email: 'jane@dose.com', bio: 'forever young')
   end
 
   it 'gets a user' do
@@ -50,5 +42,10 @@ describe 'client' do
     expect(user['name']).to eq('john')
     expect(user['bio']).to eq('rspec master')
     expect(ClientUser.find_by_name('john')).to eq(user)
+  end
+
+  it 'destroys a user' do
+    expect(ClientUser.destroy('jane')).to be true
+    expect(ClientUser.find_by_name('jane')).to be_nil
   end
 end

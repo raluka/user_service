@@ -39,5 +39,10 @@ require 'json'
           raise response.body
         end
       end
+
+      def destroy(name)
+        response = Typhoeus::Request.delete("#{base_uri}/api/v1/users/#{name}")
+        response.success? # response.code == 200
+      end
     end
   end
