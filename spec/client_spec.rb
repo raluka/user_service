@@ -44,4 +44,11 @@ describe 'client' do
     expect(user['email']).to eq('ana@email.com')
     expect(ClientUser.find_by_name('ana')).to eq(user)
   end
+
+  it 'updates a user' do
+    user = ClientUser.update('john', { bio: 'rspec master' })
+    expect(user['name']).to eq('john')
+    expect(user['bio']).to eq('rspec master')
+    expect(ClientUser.find_by_name('john')).to eq(user)
+  end
 end

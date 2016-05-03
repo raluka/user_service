@@ -27,5 +27,17 @@ require 'json'
           raise response.body
         end
       end
+
+      def update(name, attributes)
+        response = Typhoeus::Request.put(
+          "#{base_uri}/api/v1/users/#{name}",
+          body: attributes.to_json
+        )
+        if response.code == 200
+          JSON.parse(response.body)
+        else
+          raise response.body
+        end
+      end
     end
   end
