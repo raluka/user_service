@@ -34,4 +34,14 @@ describe 'client' do
   it 'returns nil for a user not found' do
     expect(ClientUser.find_by_name('gibberish')).to be_nil
   end
+
+  it 'creates a user' do
+    user = ClientUser.create({
+      name: 'ana',
+      email: 'ana@email.com',
+      password: 'general' })
+    expect(user['name']).to eq('ana')
+    expect(user['email']).to eq('ana@email.com')
+    expect(ClientUser.find_by_name('ana')).to eq(user)
+  end
 end
