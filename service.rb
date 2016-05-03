@@ -20,14 +20,12 @@ databases = YAML.load_file('config/database.yml')
 ActiveRecord::Base.establish_connection(databases[env])
 log.debug "#{databases[env]['database']} database connection established."
 
-#creating a fixture data (only in test mode)
+#creating a fixture data (only in test mode) for client library
 if env == 'test'
-  User.destroy_all
-  User.create(
-        name: 'john',
-        email: 'john@dose.com',
-        bio: 'rubyist'
-  )
+  puts 'Starting in test mode...'
+  User.delete_all
+  User.create(name: 'john', email: 'john@dose.com', bio: 'rubyist')
+
   log.debug 'fixture data created in test database.'
 end
 
