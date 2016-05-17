@@ -7,9 +7,8 @@ Install the gems:
 
 Migrate the development and test databases:
 
-```rake db:migrate SINATRA_ENV=test
-    rake db:migrate SINATRA_ENV=development
-```
+`rake db:migrate SINATRA_ENV=test`
+`rake db:migrate SINATRA_ENV=development`
 
 Run the service specs:
 
@@ -17,6 +16,7 @@ Run the service specs:
 
 Run the client library specs. In 2 diferent terminals:
 
-```ruby service.rb -e test -p 3000
+```
+ruby service.rb -e test -p 3000
 rspec spec/client_spec.rb
 ```
