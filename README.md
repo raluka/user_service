@@ -8,6 +8,7 @@ Install the gems:
 Migrate the development and test databases:
 
 `rake db:migrate SINATRA_ENV=test`
+
 `rake db:migrate SINATRA_ENV=development`
 
 Run the service specs:
